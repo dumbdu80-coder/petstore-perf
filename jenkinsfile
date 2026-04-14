@@ -1,0 +1,16 @@
+pipeline{
+agent any
+stages{
+stage('Run Jmeter Test'){
+steps{
+sh'''
+jmeter -n -t PetStore_CICD.jmx -l result.jtl -e -o report
+'''
+}
+stage('archive report'){
+steps{
+archiveArtifacts artifacts: 'report/**', fingerprint: true
+}
+}
+}
+}
